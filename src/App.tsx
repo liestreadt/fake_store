@@ -1,15 +1,20 @@
 import { observer } from 'mobx-react-lite'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { MainPage } from './pages/mainPage/MainPage'
-import { BucketPage } from './pages/bucketPage/BucketPage'
+import { Layout } from './components/Layout/Layout'
+import { MainPage } from './pages/MainPage/MainPage'
+import { FavoritesPage } from './pages/FavoritesPage/FavoritesPage'
+import { BucketPage } from './pages/BucketPage/BucketPage'
 
 function AppComponent() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route path='/bucket' element={<BucketPage />} />
+        <Route path='/' element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path='/favorites' element={<FavoritesPage />} />
+          <Route path='/bucket' element={<BucketPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

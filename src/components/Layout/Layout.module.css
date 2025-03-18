@@ -1,0 +1,21 @@
+.appBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.mainHeading {
+  display: flex;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.mainNavigationWrapper {
+  display: flex;
+  gap: 1rem;
+}

@@ -26,7 +26,6 @@ export default tseslint.config(
         "sourceType": "module"
     },
     plugins: {
-      "prettier": prettier,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
