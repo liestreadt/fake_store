@@ -1,6 +1,28 @@
 .cardWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+
+    width: 400px;
+    max-width: 190px;
+    height: 400px;
+    max-height: 400px;
+
+    & * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    max-height: 140px;
+    height: 140px;
+    overflow: visible;
+
+    & img {
+        height: 140px;
+    }
 }
