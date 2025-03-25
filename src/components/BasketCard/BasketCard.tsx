@@ -29,7 +29,7 @@ export const BasketCard: FC<ICardProps> = ({ item }) => {
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                     <CardMedia
                         component="img"
-                        sx={{ width: '14rem', borderRadius: '4px' }}
+                        sx={{ width: '14rem', borderRadius: '4px', margin: 'auto' }}
                         image={images[0] ?? ''}
                         alt={`image_${title}`}
                     />

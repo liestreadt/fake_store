@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import React, { FC, useCallback } from 'react';
-import styles from './Card.module.css';
 import {
+    CardActionArea,
     CardActions,
     CardContent,
     CardHeader,
@@ -16,9 +14,9 @@ import {
 import ShareIcon from '@mui/icons-material/Share';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { ExpandMoreProps, ICardProps } from './Card.types';
-import { basketStore } from '../../store/basketStore';
+import { useNavigate } from 'react-router';
+import { BasketButton } from '../BasketButton/BasketButton';
 
 export const Card: FC<ICardProps> = ({ item }) => {
     const {
@@ -30,15 +28,22 @@ export const Card: FC<ICardProps> = ({ item }) => {
         category: { name: categoryName },
     } = item;
 
-    const handleAddingToBasket = useCallback(() => {
-        basketStore.addCardToBasket(item);
-    }, []);
+    const navigate = useNavigate();
 
     const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
+    const handleExpandClick = useCallback(() => {
         setExpanded(!expanded);
-    };
+    }, [expanded]);
+
+    const handleCardClick = useCallback(
+        (event: React.MouseEvent) => {
+            event.stopPropagation();
+
+            navigate(`/item/${id}`);
+        },
+        [id, navigate],
+    );
 
     const ExpandMore = styled((props: ExpandMoreProps) => {
         const { ...other } = props;
@@ -66,14 +71,10 @@ export const Card: FC<ICardProps> = ({ item }) => {
 
     return (
         <article>
-            <MuiCard className={styles.cardWrapper} variant="outlined">
+            <MuiCard sx={{ maxWidth: '345px', width: '345px' }} variant="outlined">
                 <CardHeader
                     sx={{ overflow: 'hidden' }}
-                    action={
-                        <IconButton onClick={handleAddingToBasket} aria-label="settings">
-                            <ShoppingBasketIcon />
-                        </IconButton>
-                    }
+                    action={<BasketButton item={item} />}
                     title={
                         <div
                             style={{
@@ -97,12 +98,14 @@ export const Card: FC<ICardProps> = ({ item }) => {
                         >{`${price} $`}</div>
                     }
                 />
-                <CardMedia component="img" height="194" image={images[0] ?? ''} alt={`image_${title}`} />
-                <CardContent>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {categoryName}
-                    </Typography>
-                </CardContent>
+                <CardActionArea onClick={handleCardClick}>
+                    <CardMedia component="img" height="194" image={images[0] ?? ''} alt={`image_${title}`} />
+                    <CardContent>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            {categoryName}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
                         <FavoriteIcon />
@@ -124,20 +127,6 @@ export const Card: FC<ICardProps> = ({ item }) => {
                         <Typography sx={{ marginBottom: 2 }}>{description}</Typography>
                     </CardContent>
                 </Collapse>
-
-                {/* <div style={{ whiteSpace: 'nowrap' }}>{title}</div>
-                <div className={styles.imageContainer}>
-                    <img src={images[0] ?? ''} alt={`card id - ${id}`} />
-                </div>
-                <div style={{ display: 'flex', flexGrow: 1, maxHeight: '150px', textOverflow: 'ellipsis' }}>
-                    {description}
-                </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                    <Button variant="outlined" onClick={handleAddingToBasket}>
-                        Add to basket
-                    </Button>
-                    <span>{price} $</span>
-                </div> */}
             </MuiCard>
         </article>
     );
