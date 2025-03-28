@@ -11,7 +11,7 @@ export const BasketButton: FC<IBasketButtonProps> = ({ item }) => {
     const handleButtonClick = useCallback(() => {
         if (isItemInBasket) {
             console.log('remove');
-            basketStore.removeFromBasket(item);
+            basketStore.removeFromBasket(item.id);
             setIsItemInBasket(false);
         } else {
             console.log('set');

@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite';
 import { FC, useLayoutEffect } from 'react';
 import { useParams } from 'react-router';
 import { itemStore } from '../../store/itemStore';
-import { Box, Card, CardContent, CardHeader, CardMedia, IconButton } from '@mui/material';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { Box, Card, CardContent, CardHeader, CardMedia } from '@mui/material';
+import { BasketButton } from '../../components/BasketButton/BasketButton';
 
 export const ItemPage: FC = observer(() => {
     const { id } = useParams();
@@ -23,11 +23,7 @@ export const ItemPage: FC = observer(() => {
             <main>
                 <Card sx={{ padding: '0 1rem' }}>
                     <CardHeader
-                        action={
-                            <IconButton aria-label="settings">
-                                <ShoppingBasketIcon />
-                            </IconButton>
-                        }
+                        action={<BasketButton item={itemStore.itemData} />}
                         title={<h4 style={{ margin: 0 }}>{itemStore.itemData.title}</h4>}
                     />
                     <CardContent

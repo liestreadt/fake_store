@@ -13,8 +13,8 @@ export const BasketCard: FC<ICardProps> = ({ item }) => {
     } = item;
 
     const handleRemoveFromBasket = useCallback(() => {
-        basketStore.removeFromBasket(item);
-    }, []);
+        basketStore.removeFromBasket(item.id);
+    }, [item.id]);
 
     return (
         <article>
