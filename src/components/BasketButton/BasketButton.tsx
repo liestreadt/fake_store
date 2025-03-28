@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import { IconButton } from '@mui/material';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { IBasketButtonProps } from './BasketButton.types';
 import { basketStore } from '../../store/basketStore';
 
@@ -22,7 +22,7 @@ export const BasketButton: FC<IBasketButtonProps> = ({ item }) => {
 
     return (
         <IconButton onClick={handleButtonClick} aria-label="settings">
-            {isItemInBasket ? <RestoreFromTrashIcon /> : <ShoppingBasketIcon />}
+            {isItemInBasket ? <RemoveShoppingCartIcon /> : <AddShoppingCartIcon />}
         </IconButton>
     );
 };

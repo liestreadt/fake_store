@@ -1,7 +1,7 @@
 import { Box, CardContent, CardMedia, IconButton, Card as MuiCard } from '@mui/material';
 import { ICardProps } from '../Card/Card.types';
 import { FC, useCallback } from 'react';
-import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { basketStore } from '../../store/basketStore';
 
 export const BasketCard: FC<ICardProps> = ({ item }) => {
@@ -41,7 +41,7 @@ export const BasketCard: FC<ICardProps> = ({ item }) => {
                 </Box>
                 <Box>
                     <IconButton onClick={handleRemoveFromBasket}>
-                        <RestoreFromTrashIcon />
+                        <RemoveShoppingCartIcon />
                     </IconButton>
                 </Box>
             </MuiCard>

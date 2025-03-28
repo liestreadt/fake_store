@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { Link, Outlet } from 'react-router';
 import styles from './Layout.module.css';
-import { AppBar, Button, Container, Toolbar } from '@mui/material';
+import { AppBar, Box, Container, IconButton, Toolbar } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 export const Layout: FC = () => {
     return (
@@ -19,14 +21,24 @@ export const Layout: FC = () => {
                         <Link to="/">FAKE STORE</Link>
                     </h1>
                     <nav className={styles.navigationContainer}>
-                        <div className={styles.mainNavigationWrapper}></div>
-                        <div>
+                        <Box className={styles.mainNavigationWrapper}></Box>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                gap: '1rem',
+                            }}
+                        >
                             <Link to="basket">
-                                <Button color="info" variant="contained">
-                                    Basket
-                                </Button>
+                                <IconButton>
+                                    <ShoppingCartIcon />
+                                </IconButton>
                             </Link>
-                        </div>
+                            <Link to="login">
+                                <IconButton>
+                                    <AccountBoxIcon />
+                                </IconButton>
+                            </Link>
+                        </Box>
                     </nav>
                 </Toolbar>
             </AppBar>
