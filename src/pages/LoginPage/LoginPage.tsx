@@ -1,15 +1,65 @@
-import { FC } from 'react';
-import { InputField } from '../../components/InputField/InputField';
-import { EInputTypes } from '../../components/InputField/InputField.types';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
+import { InputField } from '../../components/Form/InputField/InputField';
+import { BaseForm } from '../../components/Form/BaseForm/BaseForm';
+import { ELoginPageState } from './LoginPage.types';
+import { Box, Button, Container, Link } from '@mui/material';
 
-export const LoginPage: FC = () => {
+export const LoginPageComponent: FC = () => {
+    const [loginState, setLoginState] = useState(ELoginPageState.LOGIN);
+
+    const handleLoginStateClick = useCallback(() => {
+        setLoginState((prev) => {
+            if (prev === ELoginPageState.LOGIN) {
+                return ELoginPageState.REGISTER;
+            }
+
+            return ELoginPageState.LOGIN;
+        });
+    }, []);
+
+    const loginStateContent = useMemo(() => {
+        return (
+            <>
+                <InputField required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
+                <InputField required={true} name={'Password'} type="password" labelNode={'Введите Пароль'} />
+                <InputField name={'RememberUser'} type="checkbox" labelNode={'Запомнить меня'} />
+                <Button type="submit" variant="contained">
+                    Войти
+                </Button>
+            </>
+        );
+    }, []);
+
+    const registerStateContent = useMemo(() => {
+        return (
+            <>
+                <InputField required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
+                <InputField required={true} name={'Name'} type="text" labelNode={'Введите Имя'} />
+                <InputField name={'Email'} type="email" labelNode={'Введите e-mail'} />
+                <InputField required={true} name={'Password'} type="password" labelNode={'Введите Пароль'} />
+                <InputField required={true} name={'PasswordRepeat'} type="password" labelNode={'Повторите Пароль'} />
+                <Button type="submit" variant="contained">
+                    Войти
+                </Button>
+            </>
+        );
+    }, []);
+
     return (
-        <main>
-            <form>
-                <InputField type={EInputTypes.TEXT} labelNode={'Text'} />
-                <InputField type={EInputTypes.CHECKBOX} labelNode={'Check'} />
-                <InputField type={EInputTypes.PASSWORD} labelNode={'Pass'} />
-            </form>
-        </main>
+        <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <BaseForm>{loginState === ELoginPageState.LOGIN ? loginStateContent : registerStateContent}</BaseForm>
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Button variant="text" onClick={handleLoginStateClick}>
+                    <Link>
+                        {loginState === ELoginPageState.LOGIN ? ELoginPageState.REGISTER : ELoginPageState.LOGIN}
+                    </Link>
+                </Button>
+                <Button variant="text">
+                    <Link>Забыли пароль?</Link>
+                </Button>
+            </Box>
+        </Container>
     );
 };
+
+export const LoginPage = memo(LoginPageComponent);
