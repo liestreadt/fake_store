@@ -3,5 +3,5 @@ export interface IBaseFormProps {
 }
 
 export type TFormState = {
-    isValid: boolean;
+    isValid: boolean | null;
 };

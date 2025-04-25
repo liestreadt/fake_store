@@ -6,6 +6,16 @@ import { BasketPage } from './pages/BasketPage/BasketPage';
 import { ItemPage } from './pages/ItemPage/ItemPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 
+const connection = new WebSocket('ws://localhost:3000/');
+
+connection.onopen = () => {
+    console.log('Подключение создано');
+};
+
+connection.onclose = () => {
+    console.log('Подключение окончено');
+};
+
 function AppComponent() {
     return (
         <BrowserRouter>

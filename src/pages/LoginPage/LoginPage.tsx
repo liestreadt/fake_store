@@ -3,6 +3,7 @@ import { InputField } from '../../components/Form/InputField/InputField';
 import { BaseForm } from '../../components/Form/BaseForm/BaseForm';
 import { ELoginPageState } from './LoginPage.types';
 import { Box, Button, Container, Link } from '@mui/material';
+import { SelectField, SelectFieldOption } from '../../components/Form/SelectField/SelectField';
 
 export const LoginPageComponent: FC = () => {
     const [loginState, setLoginState] = useState(ELoginPageState.LOGIN);
@@ -23,6 +24,11 @@ export const LoginPageComponent: FC = () => {
                 <InputField required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
                 <InputField required={true} name={'Password'} type="password" labelNode={'Введите Пароль'} />
                 <InputField name={'RememberUser'} type="checkbox" labelNode={'Запомнить меня'} />
+                <SelectField defaultValue={'asd'} required name="Select">
+                    <SelectFieldOption value="123" />
+                    <SelectFieldOption value="asd" />
+                    <SelectFieldOption value="zxc" />
+                </SelectField>
                 <Button type="submit" variant="contained">
                     Войти
                 </Button>
@@ -34,12 +40,12 @@ export const LoginPageComponent: FC = () => {
         return (
             <>
                 <InputField required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
-                <InputField required={true} name={'Name'} type="text" labelNode={'Введите Имя'} />
+                <InputField name={'Name'} type="text" labelNode={'Введите Имя'} />
                 <InputField name={'Email'} type="email" labelNode={'Введите e-mail'} />
                 <InputField required={true} name={'Password'} type="password" labelNode={'Введите Пароль'} />
                 <InputField required={true} name={'PasswordRepeat'} type="password" labelNode={'Повторите Пароль'} />
                 <Button type="submit" variant="contained">
-                    Войти
+                    Регистрация
                 </Button>
             </>
         );

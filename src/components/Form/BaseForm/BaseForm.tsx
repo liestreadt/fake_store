@@ -2,28 +2,46 @@ import { createContext, FC, useState } from 'react';
 import { IBaseFormProps, TFormState } from './BaseForm.types';
 import { Box } from '@mui/material';
 
-export const FormContext = createContext('formContext');
+export const FormContext = createContext<TFormState>({
+    isValid: null,
+});
 
 export const BaseForm: FC<IBaseFormProps> = ({ children }) => {
-    const [formState, setFormState] = useState<TFormState>({ isValid: false });
+    const [formState, setFormState] = useState<TFormState>({ isValid: null });
+
+    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formInputNodes = event.currentTarget.querySelectorAll('input');
+
+        const formData = new FormData(event.currentTarget);
+
+        setFormState((prev) => ({ ...prev, isValid: null }));
+
+        let isValid = formState.isValid;
+
+        for (let i = 0; i < formInputNodes.length; i++) {
+            if (formInputNodes[i].classList.contains('data-required')) {
+                if (formInputNodes[i].value) {
+                    isValid = true;
+                    continue;
+                } else {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        setFormState({ isValid });
+
+        for (const object of formData) {
+            console.log(object);
+        }
+    };
 
     return (
-        <form
-            onSubmit={(e) => {
-                const formData = new FormData(e.currentTarget);
-
-                console.log(formState);
-                console.log(e.currentTarget.checkValidity());
-
-                setFormState((prev) => ({ ...prev, isValid: false }));
-
-                for (const [key, value] of formData.entries()) {
-                    console.log(key, value);
-                }
-                e.preventDefault();
-            }}
-        >
-            <FormContext.Provider value="123">
+        <form onSubmit={handleFormSubmit}>
+            <FormContext.Provider value={formState}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{children}</Box>
             </FormContext.Provider>
         </form>
