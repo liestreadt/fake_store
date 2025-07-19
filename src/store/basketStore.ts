@@ -38,6 +38,10 @@ class BasketStore {
         this._selectedItems.delete(id);
         localStorage.setItem('basket', JSON.stringify(this._selectedItems));
     }
+
+    public clearBasket() {
+        this._selectedItems.clear();
+    }
 }
 
 export const basketStore = new BasketStore();

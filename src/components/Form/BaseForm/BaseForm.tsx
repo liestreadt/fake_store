@@ -39,10 +39,16 @@ export const BaseForm: FC<IBaseFormProps> = ({ children }) => {
         }
     };
 
+    const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
+        const formData = new FormData(event.currentTarget);
+
+        console.log(formData, event.currentTarget);
+    };
+
     return (
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
             <FormContext.Provider value={formState}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{children}</Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '15rem' }}>{children}</Box>
             </FormContext.Provider>
         </form>
     );

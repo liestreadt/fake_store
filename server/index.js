@@ -11,7 +11,10 @@ const webSocketServer = new WebSocket.Server({ server });
 const dispatchEvent = (message, ws) => {
     const json = JSON.parse(message);
 
-    const chatOpenMessage = JSON.stringify({ event: 'chat-open', message: 'Здравия желаю' });
+    const chatOpenMessage = JSON.stringify({
+        event: 'chat-open',
+        message: 'Список доступных команд:\n/help\n/info\n/clear',
+    });
 
     switch (json.event) {
         case 'chat-message':
@@ -19,7 +22,7 @@ const dispatchEvent = (message, ws) => {
                 case '/help':
                     webSocketServer.clients.forEach((client) =>
                         client.send(
-                            JSON.stringify({ event: 'chat-message', message: 'Вспомогательная информация. Пояснение' }),
+                            JSON.stringify({ event: 'chat-message', message: 'Информация об устройстве сайта' }),
                         ),
                     );
                     break;
@@ -28,7 +31,7 @@ const dispatchEvent = (message, ws) => {
                         client.send(
                             JSON.stringify({
                                 event: 'chat-message',
-                                message: 'Добавить какую-то информацию об оплате или типа того',
+                                message: 'Информацию об оплате и прочее',
                             }),
                         ),
                     );
@@ -43,6 +46,11 @@ const dispatchEvent = (message, ws) => {
             break;
         case 'chat-open':
             webSocketServer.clients.forEach((client) => client.send(chatOpenMessage));
+            break;
+        case 'chat-clear':
+            webSocketServer.clients.forEach((client) =>
+                client.send(JSON.stringify({ event: 'chat-clear', message: 'Чат очищен' })),
+            );
             break;
         default:
             ws.send(`${new Error('Wrong query').message} - ${json.event}`);

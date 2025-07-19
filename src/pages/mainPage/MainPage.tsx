@@ -12,7 +12,7 @@ export const MainPage: FC = observer(() => {
     return (
         <main>
             <div>
-                <Grid2 justifyContent={'space-between'} container spacing={2}>
+                <Grid2 justifyContent={'center'} container spacing={2}>
                     {mainStore.data &&
                         mainStore.data.map((item, index) => {
                             return <Card key={index} item={item} />;

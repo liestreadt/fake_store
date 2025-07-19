@@ -1,42 +1,72 @@
-import { FC, memo, useContext, useState, useMemo } from 'react';
+import { FC, memo, useContext, useState, useMemo, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { IInputFieldProps } from './InputField.types';
 import styles from './InputField.module.css';
 import { FormContext } from '../BaseForm/BaseForm';
 
-export const InputFieldComponent: FC<IInputFieldProps> = ({ type, labelNode, name, required }) => {
+export const InputFieldComponent: FC<IInputFieldProps> = ({ type, labelNode, name, initialValue, required }) => {
     const formContext = useContext(FormContext);
+    const [isInputValid, setIsInputValid] = useState(true);
 
-    const [isPristine, setIsPristine] = useState(true);
+    useEffect(() => {
+        // if
+    }, [formContext.isValid]);
 
     const inputClassNames = useMemo(() => {
-        const invalidStyles =
-            (required && formContext.isValid !== null && !formContext.isValid) || isPristine
-                ? // ^ Нужно сделать нормальное условие
-                  styles.inputInvalid
-                : '';
+        console.log(`%c${'required'}`, 'color: yellow', required);
+        console.log(`%c${'formContext.isValid'}`, 'color: orange', formContext.isValid);
+        console.log(`%c${'!isInputValid'}`, 'color: orange', !isInputValid);
 
-        console.log(`%c${'invalidStyles'}`, 'color: yellow', !isPristine);
+        if (!required) {
+            return styles.input;
+        }
+
+        console.log(required);
+        console.log(isInputValid);
+
+        const invalidStyles = isInputValid ? '' : styles.inputInvalid;
+
+        // required && formContext.isValid === false ? styles.inputInvalid : '';
 
         return `${styles.input} ${invalidStyles} ${required ? 'data-required' : ''}`;
-    }, [formContext.isValid, isPristine, required]);
+    }, [formContext.isValid, isInputValid, required]);
 
-    const handleInputChange = () => {
-        if (isPristine) {
-            setIsPristine(false);
+    const handleInputChange = (event: React.ChangeEvent) => {
+        const input = event.target as HTMLInputElement;
+
+        if (!required) {
+            return;
+        }
+
+        if (type === 'checkbox') {
+            if (input.checked) {
+                console.log(type);
+                setIsInputValid(true);
+            } else {
+                setIsInputValid(false);
+            }
+
+            return;
+        }
+
+        if (input.value === '' || input.value.includes('<') || input.value.includes('>')) {
+            //                    ^      Пример примитивного способа защиты от XSS      ^
+            setIsInputValid(false);
+        } else {
+            setIsInputValid(true);
         }
     };
-
-    console.log('isFormValid', formContext.isValid);
-
-    // ! Способы защиты от XSS в полях input
-    // ! Оставлять поле невалидным, если в нём используются символы < или >
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '0.5rem' }}>
             <label>{labelNode}</label>
-            <input onChange={handleInputChange} name={name} className={inputClassNames} type={type} />
-            {/* // ^ Вынести селект в отдельный компонент */}
+            <input
+                defaultValue={initialValue}
+                onChange={handleInputChange}
+                name={name}
+                className={inputClassNames}
+                type={type}
+            />
         </Box>
     );
 };

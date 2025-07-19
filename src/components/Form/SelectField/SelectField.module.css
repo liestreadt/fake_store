@@ -1,0 +1,9 @@
+.select {
+    border: none;
+    border-radius: 4px;
+    outline: 1px solid #666;
+    width: 100%;
+    background: #fff6;
+    height: 1.5rem;
+    box-sizing: border-box;
+}

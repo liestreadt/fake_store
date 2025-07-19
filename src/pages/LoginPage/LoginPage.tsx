@@ -21,10 +21,10 @@ export const LoginPageComponent: FC = () => {
     const loginStateContent = useMemo(() => {
         return (
             <>
-                <InputField required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
+                <InputField initialValue="asd" required={true} name={'Login'} type="text" labelNode={'Введите Логин'} />
                 <InputField required={true} name={'Password'} type="password" labelNode={'Введите Пароль'} />
-                <InputField name={'RememberUser'} type="checkbox" labelNode={'Запомнить меня'} />
-                <SelectField defaultValue={'asd'} required name="Select">
+                <InputField required={true} name={'RememberUser'} type="checkbox" labelNode={'Запомнить меня'} />
+                <SelectField defaultValue={'asd'} required={true} name="Select" labelNode={'Выберите значение'}>
                     <SelectFieldOption value="123" />
                     <SelectFieldOption value="asd" />
                     <SelectFieldOption value="zxc" />
