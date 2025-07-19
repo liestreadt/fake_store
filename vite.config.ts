@@ -5,5 +5,5 @@ import eslint from 'vite-plugin-eslint2';
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [react(), eslint()],
-    base: '/fake-store/',
+    base: '/fake_store/',
 });
