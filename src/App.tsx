@@ -8,7 +8,7 @@ import { LoginPage } from './pages/LoginPage/LoginPage';
 
 function AppComponent() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/fake_store/">
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<MainPage />} />
